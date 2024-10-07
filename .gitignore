@@ -5,3 +5,4 @@ frontend/dist/
 logs/
 .env
 .air.toml
+.clj
