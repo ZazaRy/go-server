@@ -1,44 +1,55 @@
 {{ block "register-form" .}}
-<div class="rounded-lg p-4 slide-it">
-    <form class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 slide-it"
-        hx-post="/register"
-        hx-target="#status-message"
-        hx-swap="innerHTML">
+<div id="register-form">
+    <form hx-post="/register" hx-target="#login-error" hx-swap="outerHTML">
 
-    <div class="flex flex-col">
-      <label class="block mb-1 text-white">Register New Username:</label>
-      <input class="border rounded py-2 px-3 w-full sm:w-auto"
-                type="text"
-                name="username" required>
-    </div>
+        <div class="flex flex-col">
+            <label class="block mb-1 text-white">Choose your username:</label>
+            <input class="border rounded py-2 px-3 w-full"
+                   type="text"
+                   name="username" required>
+        </div>
 
-    <div class="flex flex-col">
-      <label class="block mb-1 text-white">Enter Password:</label>
-      <input class="border rounded py-2 px-3  w-full sm:w-auto"
-                type="password"
-                name="password" required>
-    </div>
+        <div class="flex flex-col">
+            <label class="block mb-1 text-white">Enter your email:</label>
+            <input class="border rounded py-2 px-3 w-full"
+                   type="email"
+                   name="email" required>
+        </div>
 
-        <button type="submit" class="bg-blue-500 hover:bg-blue-700
-            text-white font-bold py-2 px-4 mt-4 sm:mt-0 rounded w-full sm:w-auto">
-            Register
-        </button>
+        <div class="flex flex-col">
+            <label class="block mb-1 text-white">Enter password:</label>
+            <input class="border rounded py-2 px-3 w-full"
+                   type="password"
+                   name="password" required>
+        </div>
 
-        <button class="bg-green-500 hover:bg-green-700
-            text-white font-bold py-2 px-4 rounded mt-4 w-full sm:w-auto slide-it"
-            hx-get="/login-form"
-            hx-swap="outerHTML transition:true"
-            hx-target="closest div">
-            Go to Login Form
-        </button>
+        <div class="flex flex-col">
+            <label class="block mb-1 text-white">Enter password again:</label>
+            <input class="border rounded py-2 px-3 w-full"
+                   type="password"
+                   name="confirm_password" required>
+        </div>
+
+        <div class="flex flex-col">
+            <label class="block mb-1 text-white">CAPTCHA PLACEHOLDER</label>
+            <input class="border rounded py-2 px-3 w-full"
+                   type="text"
+                   name="captcha" required placeholder="Enter the CAPTCHA">
+        </div>
+
+        <div class="flex flex-row justify-between">
+            <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto">
+                Sign Up!
+            </button>
+            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto"
+                    hx-get="/login-form"
+                    hx-swap="outerHTML transition:true"
+                    hx-target="#register-form">
+                Go to Login Form
+            </button>
+        </div>
     </form>
-
-    <div id="status-message" class="block mb-2 text-white">
-        {{ .Message }}
-    </div>
-
 </div>
 {{ end }}
-
-
 

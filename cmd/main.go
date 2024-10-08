@@ -183,6 +183,17 @@ func main() {
         return c.Render(http.StatusOK, "register-form.html", nil)
     })
 
+    e.GET("/account", func(c echo.Context) error {
+        sess, _ := session.Get("session", c)
+        username := sess.Values["username"]
+        if username == nil {
+            return c.Redirect(http.StatusMovedPermanently, "/login-form")
+        }
+        return c.Render(http.StatusOK, "account.html", map[string]interface{}{
+            "Username": username,
+        })
+    })
+
     e.POST("/register", func(c echo.Context) error {
         username := c.FormValue("username")
         password := c.FormValue("password")
@@ -194,7 +205,8 @@ func main() {
 
         if exists {
             return c.Render(http.StatusOK, "partials.html", map[string]interface{}{
-                "Message": "User already exists", // TODO: Add red color to message in template
+                "Message": "User already exists", //
+                "MessageType": "error",
         })
     }
 
@@ -212,21 +224,25 @@ func main() {
         username := c.FormValue("username")
         password := c.FormValue("password")
 
-        // Check if the user credentials are valid
         valid, err := matchUserPassword(username, password)
         if err != nil {
             return c.Render(http.StatusOK, "partials.html", map[string]interface{}{
                 "Message": "Error logging in. Please try again",
+                "MessageType": "error",
+                "targetID": "#login-error",
+                "swapID": "outerHTML",
             })
         }
 
         if !valid {
             return c.Render(http.StatusOK, "partials.html", map[string]interface{}{
                 "Message": "Invalid username or password! Please try again",
+                "MessageType": "error",
+                "targetID": "#login-error",
+                "swapID": "outerHTML",
             })
         }
 
-        // Create session on successful login
         sess, _ := session.Get("session", c)
         sess.Values["username"] = username
         sess.Save(c.Request(), c.Response())
@@ -237,7 +253,6 @@ func main() {
 
 
 
-    // Start Echo with TLS
     e.Logger.Fatal(e.StartTLS(":443", cert, key))
 }
 
