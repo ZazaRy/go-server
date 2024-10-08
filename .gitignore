@@ -6,3 +6,4 @@ logs/
 .env
 .air.toml
 .clj
+.nohup.out
