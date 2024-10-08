@@ -1,2 +1,2 @@
 # go-server
-go webserver
+Project for a web-server runniung dnd simulations on the website.
