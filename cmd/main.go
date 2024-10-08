@@ -183,15 +183,22 @@ func main() {
         return c.Render(http.StatusOK, "register-form.html", nil)
     })
 
-    e.GET("/account", func(c echo.Context) error {
+    e.GET("/user-land", func(c echo.Context) error {
         sess, _ := session.Get("session", c)
         username := sess.Values["username"]
         if username == nil {
-            return c.Redirect(http.StatusMovedPermanently, "/login-form")
+            return c.Redirect(http.StatusMovedPermanently, "/")
         }
-        return c.Render(http.StatusOK, "account.html", map[string]interface{}{
+        return c.Render(http.StatusOK, "user-land.html", map[string]interface{}{
             "Username": username,
         })
+    })
+
+    e.GET("/logout", func(c echo.Context) error {
+        sess, _ := session.Get("session", c)
+        sess.Options.MaxAge = -1
+        sess.Save(c.Request(), c.Response())
+        return c.Redirect(http.StatusMovedPermanently, "/")
     })
 
     e.POST("/register", func(c echo.Context) error {
@@ -219,6 +226,9 @@ func main() {
         })
     })
 
+    e.GET("/login", func(c echo.Context) error {
+        return c.Redirect(http.StatusMovedPermanently, "/user-land")
+    })
 
     e.POST("/login", func(c echo.Context) error {
         username := c.FormValue("username")
@@ -247,7 +257,9 @@ func main() {
         sess.Values["username"] = username
         sess.Save(c.Request(), c.Response())
 
-        return c.Render(http.StatusOK, "user-land.html", nil)
+        return c.Render(http.StatusOK, "user-land.html", map[string]interface{}{
+            "Username": username,
+        })
     })
 
 
