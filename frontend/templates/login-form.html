@@ -1,6 +1,6 @@
 {{ block "login-form" .}}
 <div id="login-form">
-    <form hx-boost="true" action="/login" method="post"  {{ if .LoginSuccess }} hx-push-url="/user-land.html" {{else}}  hx-target="{{.targetID}}" hx-swap="" {{ end }} >
+    <form hx-boost="true" action="/login" method="post"  {{ if .LoginSuccess }} hx-push-url="/user-land.htm" {{else}}  hx-target="{{.targetID}}" hx-swap="" {{ end }} >
 
 
     <div class="flex flex-col">

@@ -1,0 +1,13 @@
+{{ block "displayMonster" . }}
+<div hx-target="this" hx-swap="outerHTML">
+    <div class="mb-1"><label>Monster Name</label>: {{ .MonsterName }}</div>
+    <div class="mb-1"><label>Monster HP</label>: {{ .MonsterHealth }}</div>
+    <div class="mb-1"><label>Monster AC</label>: {{ .MonsterAC }}</div>
+    <div class="mb-1"><label>Monster Attack Roll Bonus</label>: {{ .MonsterAttackRoll }}</div>
+    <div class="mb-1"><label>Monster Damage</label>: {{ .MonsterDamage }}</div>
+    <button hx-get="/monster/1/edit" class="btn btn-primary transition duration-200 ease-in-out transform hover:scale-105">
+        Click to Edit Monster
+    </button>
+</div>
+{{ end }}
+

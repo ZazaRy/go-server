@@ -171,6 +171,8 @@ func main() {
         e.Logger.Fatal(e.Start(":80"))
     }()
 
+
+
     e.GET("/", func(c echo.Context) error {
         return c.Render(http.StatusOK, "index.html", nil)
     })
@@ -201,6 +203,35 @@ func main() {
         return c.Redirect(http.StatusMovedPermanently, "/")
     })
 
+    var monster = map[string]interface{}{
+        "MonsterName": "Adult Black Dragon",
+        "MonsterHealth": "100",
+        "MonsterAC": "20",
+        "MonsterAttackRoll": "10",
+        "MonsterDamage": "2d6+4",
+    }
+
+    e.GET("/monster/1/edit", func(c echo.Context) error {
+        return c.Render(http.StatusOK, "monsterEdit.html", monster)
+    })
+
+    e.PUT("/monster/1", func(c echo.Context) error {
+        monster["MonsterName"] = c.FormValue("monsterName")
+        monster["MonsterHealth"] = c.FormValue("monsterHealth")
+        monster["MonsterAC"] = c.FormValue("monsterAC")
+        monster["MonsterAttackRoll"] = c.FormValue("monsterAttackRoll")
+        monster["MonsterDamage"] = c.FormValue("monsterDamage")
+
+        return c.Render(http.StatusOK, "displayMonster.html", monster)
+    })
+
+    e.GET("/monster/1", func(c echo.Context) error {
+        return c.Render(http.StatusOK, "displayMonster.html", monster)
+    })
+
+
+
+
     e.POST("/register", func(c echo.Context) error {
         username := c.FormValue("username")
         password := c.FormValue("password")
@@ -212,7 +243,7 @@ func main() {
 
         if exists {
             return c.Render(http.StatusOK, "partials.html", map[string]interface{}{
-                "Message": "User already exists", //
+                "Message": "User already exists",
                 "MessageType": "error",
         })
     }
