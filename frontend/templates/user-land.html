@@ -48,7 +48,9 @@
         <h2>Welcome to Euclidean Dragons!</h2>
         <p>Greetings {{ .Username }}! This is your dashboard. You can manage your characters and projects here.</p>
 
-        {{ template "displayMonster" . }}
+        <div class="space-y-2 p-4 rounded-lg bg-gray-700 shadow-lg text-white">
+            {{ template "displayMonster" . }}
+        </div>
 
     </div>
 </body>

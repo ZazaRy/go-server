@@ -136,13 +136,16 @@ func getUserByUsername(username string) (User, error) {
     }
     defer db.Close()
 
-    var user User
-    err = db.QueryRow("SELECT username, password FROM users WHERE username = ?", username).Scan(&user.Username, &user.Password)
+    //avoid pointers; use indexes instead
+
+    var currUser User
+
+    err = db.QueryRow("SELECT username, password FROM users WHERE username = ?", username).Scan(&currUser.Username, &currUser.Password)
     if err != nil {
         return User{}, err
     }
 
-    return user, nil
+    return currUser, nil
 }
 
 

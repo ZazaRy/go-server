@@ -7,3 +7,6 @@ logs/
 .air.toml
 .clj
 .nohup.out
+*.py
+*parser*
+nohup.out
